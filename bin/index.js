@@ -13,23 +13,14 @@ program
 
     // CLI commands
 program
-    .command('list')
-    .description('list all tasks')
-    .option('-i, --id', 'shows the task id')
-    .action(async (options) => {
+    .command('add')
+    .description('add a new task')
+    .action(async () => {
         try{
             const filePath = resolve('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json');
             const contents = await readFile(filePath, { encoding : 'utf8'});
             const json = JSON.parse(contents);
-            if(options.id){
-                for(let i = 0; i <= json.tasks.length - 1; i++){
-                    console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
-                }
-            } else {
-                for(let i = 0; i <= json.tasks.length - 1; i++){
-                    console.log(json.tasks[i].description);
-                }
-            }    
+            console.log(json);
         }
         catch(err){
             console.error(err.message);
