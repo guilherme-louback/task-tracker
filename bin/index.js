@@ -29,8 +29,7 @@ program
     .option('-i, --id', 'shows the task id')
     .action(async (options) => {
         try{
-            const contents = await getFile();
-            const json = JSON.parse(contents);
+            const json = JSON.parse(await getFile());
             if(options.id){
                 for(let i = 0; i <= json.tasks.length - 1; i++){
                     console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
