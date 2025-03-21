@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
-const { readFile } = require('fs/promises');
+const { readFile, writeFile } = require('fs/promises');
 const { resolve } = require('path');
-
 const { Command } = require('commander');
+const { randomUUID } = require('crypto');
+
 const program = new Command();
 
 async function getFile(){
     try{
         const filePath = resolve('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json');
         const contents = await readFile(filePath, { encoding : 'utf8' });
-        return contents;
+        const json = JSON.parse(contents);
+        return json;
     }
     catch(err){
         console.error(err);
@@ -29,7 +31,7 @@ program
     .option('-i, --id', 'shows the task id')
     .action(async (options) => {
         try{
-            const json = JSON.parse(await getFile());
+            const json = await getFile();
             if(options.id){
                 for(let i = 0; i <= json.tasks.length - 1; i++){
                     console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
@@ -48,9 +50,38 @@ program
 program
     .command('add')
     .description('add new tasks')
-    .action(async (options) => {
+    .argument('<description>', 'task description')
+    .option('-s, --status <status>', 'define the task status')
+    .action(async (argument, options) => {
         try{
-        
+            if(options.status){
+                const json = await getFile();
+                json.tasks.push(
+                    {
+                        id: randomUUID(),
+                        description: argument,
+                        status: `${options.status}`,
+                        createdAt: new Date().toLocaleString(),
+                        updatedAt: "none"
+                    }
+                );
+                jsonString = JSON.stringify(json);
+                await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+            } else {
+                const json = await getFile();
+                json.tasks.push(
+                    {
+                        id: randomUUID(),
+                        description: argument,
+                        status: "todo",
+                        createdAt: new Date().toLocaleString(),
+                        updatedAt: "none"
+                    }
+                );
+                jsonString = JSON.stringify(json);
+                await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+                console.log(jsonString);    
+            }
         }
         catch(err){
             console.error(err.message);
@@ -59,8 +90,6 @@ program
 
 
 program.parse(process.argv);
-
-const options = program.opts();
 
 // ADD
 // generate a random ID
