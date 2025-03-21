@@ -1,23 +1,13 @@
 #!/usr/bin/env node
+// Make the Script Executable
+// This shebang line tells the system to execute the script using Node.js.
 
-const { readFile, writeFile } = require('fs/promises');
-const { resolve } = require('path');
-const { Command } = require('commander');
+const { writeFile } = require('fs/promises');
+const { Command, Option } = require('commander');
 const { randomUUID } = require('crypto');
+const getFile = require('./getfile.js');
 
 const program = new Command();
-
-async function getFile(){
-    try{
-        const filePath = resolve('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json');
-        const contents = await readFile(filePath, { encoding : 'utf8' });
-        const json = JSON.parse(contents);
-        return json;
-    }
-    catch(err){
-        console.error(err);
-    }
-}
 
 program
     .name('Task Tracker')
@@ -51,7 +41,7 @@ program
     .command('add')
     .description('add new tasks')
     .argument('<description>', 'task description')
-    .option('-s, --status <status>', 'define the task status')
+    .addOption(new Option('-s, --status <status>', 'define the task status', 'todo').choices(['todo', 'in-progress', 'done']))
     .action(async (argument, options) => {
         try{
             if(options.status){
@@ -92,8 +82,8 @@ program
 program.parse(process.argv);
 
 // ADD
-// generate a random ID
-// allow user to add a description
+// generate a random ID ✅
+// allow user to add a description ✅
 // allow user to add a status
-// save the date of the creation
+// save the date of the creation ✅
 // track the last update of the task - default is 'none'
