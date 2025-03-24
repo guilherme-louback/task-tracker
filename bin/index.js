@@ -57,6 +57,7 @@ program
                 );
                 jsonString = JSON.stringify(json);
                 await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+                console.log(`Task added successfully (ID: ${json.tasks.at(-1).id})`);
             } else {
                 const json = await getFile();
                 json.tasks.push(
@@ -70,7 +71,7 @@ program
                 );
                 jsonString = JSON.stringify(json);
                 await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
-                console.log(jsonString);    
+                console.log(`Task added successfully (ID: ${json.tasks.at(-1).id})`);    
             }
         }
         catch(err){
@@ -78,12 +79,4 @@ program
         }
     });
 
-
 program.parse(process.argv);
-
-// ADD
-// generate a random ID ✅
-// allow user to add a description ✅
-// allow user to add a status
-// save the date of the creation ✅
-// track the last update of the task - default is 'none'
