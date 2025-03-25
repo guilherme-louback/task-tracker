@@ -79,4 +79,42 @@ program
         }
     });
 
+program
+    .command('update')
+    .description('update task description')
+    .argument('<id>', 'task id')
+    .argument('<new description>', 'new task description')
+    .action(async () => {
+        try{
+            const json = await getFile();
+            console.log(json);
+        } 
+        catch(err){
+            console.error(err.message);
+        }
+    });
+
+program
+    .command('delete')
+    .description('deletes a task')
+    .argument('<id>', 'task id')
+    .action(async (taskId) => {
+        try{
+            const json = await getFile();
+            for(let i = 0; i <= json.tasks.length - 1; i++){
+                if(json.tasks[i].id == taskId){
+                    json.tasks.splice(i, 1);
+                    break
+                } else if (i == json.tasks.length - 1){
+                    console.log(`task with ID ${taskId} not found!`)
+                }
+            }
+            jsonString = JSON.stringify(json);
+            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+        }
+        catch(err){
+            console.error(err);
+        }
+    });
+
 program.parse(process.argv);
