@@ -18,13 +18,34 @@ program
 program
     .command('list')
     .description('list all tasks')
-    .option('-i, --id', 'shows the task id')
+    .option('-i, --id', 'show the task id')
+    .option('-t, --todo', 'show all the tasks to do')
+    .option('-p, --inprogress', 'show all the tasks in progress')
+    .option('-d, --done', 'show the tasks done')
     .action(async (options) => {
         try{
             const json = await getFile();
             if(options.id){
                 for(let i = 0; i <= json.tasks.length - 1; i++){
                     console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
+                }
+            } else if(options.todo){
+                for(let i = 0; i <= json.tasks.length - 1; i++){
+                    if(json.tasks[i].status === 'todo'){
+                        console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
+                    }
+                }
+            } else if(options.inprogress){
+                for(let i = 0; i <= json.tasks.length - 1; i++){
+                    if(json.tasks[i].status === 'in-progress'){
+                        console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
+                    }
+                }
+            } else if(options.done){
+                for(let i = 0; i <= json.tasks.length - 1; i++){
+                    if(json.tasks[i].status === 'done'){
+                        console.log(json.tasks[i].description + `\nID: ${json.tasks[i].id}`);
+                    }
                 }
             } else {
                 for(let i = 0; i <= json.tasks.length - 1; i++){
@@ -84,13 +105,22 @@ program
     .description('update task description')
     .argument('<id>', 'task id')
     .argument('<new description>', 'new task description')
-    .action(async () => {
+    .action(async (taskId, taskDescription) => {
         try{
             const json = await getFile();
-            console.log(json);
-        } 
+            for(let i = 0; i <= json.tasks.length - 1; i++){
+                if(json.tasks[i].id == taskId){
+                    json.tasks[i].description = taskDescription;
+                    break
+                } else if (i == json.tasks.length - 1){
+                    console.log(`task with ID ${taskId} not found!`)
+                }
+            }
+            jsonString = JSON.stringify(json);
+            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+        }
         catch(err){
-            console.error(err.message);
+            console.error(err);
         }
     });
 
