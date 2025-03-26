@@ -147,4 +147,59 @@ program
         }
     });
 
+program
+    .command('mark-in-progress')
+    .description('change a task status to in-progress')
+    .argument('<id>', 'task id')
+    .action(async (taskId) => {
+        try{
+            const json = await getFile();
+            for(let i = 0; i <= json.tasks.length - 1; i++){
+                if(json.tasks[i].id === taskId){
+                    if(json.tasks[i].status === "in-progress"){
+                        console.log(`task status is already 'in-progress'`);
+                        break;
+                    }
+                    json.tasks[i].status = "in-progress";
+                    json.tasks[i].updatedAt = new Date().toLocaleString();
+                    break;
+                } else if (i == json.tasks.length - 1){
+                    console.log(`ID: ${taskId} não encontrado!`)
+                }
+            }
+            jsonString = JSON.stringify(json);
+            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+        }
+        catch(err){
+            console.error(err);
+        }
+    });
+
+program
+    .command('mark-done')
+    .description('change a task status to done')
+    .argument('<id>', 'task id')
+    .action(async (taskId) => {
+        try{
+            const json = await getFile();
+            for(let i = 0; i <= json.tasks.length - 1; i++){
+                if(json.tasks[i].id === taskId){
+                    if(json.tasks[i].status === "done"){
+                        console.log(`task status is already 'done'`);
+                        break;
+                    }
+                    json.tasks[i].status = "done";
+                    json.tasks[i].updatedAt = new Date().toLocaleString();
+                    break;
+                } else if (i == json.tasks.length - 1){
+                    console.log(`ID: ${taskId} não encontrado!`)
+                }
+            }
+            jsonString = JSON.stringify(json);
+            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+        }
+        catch(err){
+            console.error(err);
+        }
+    });
 program.parse(process.argv);
