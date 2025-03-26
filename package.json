@@ -1,7 +1,7 @@
 {
   "name": "tasktracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A CLI tool built to help you track your tasks!",
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
   "license": "ISC",
   "type": "commonjs",
   "bin": {
-    "mycli": "./bin/index.js"
+    "$": "./bin/index.js"
   },
   "dependencies": {
     "commander": "^13.1.0",

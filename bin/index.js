@@ -76,7 +76,7 @@ program
                     }
                 );
                 updateFile(json);
-                console.log(`Task added successfully (ID: ${jsonFile.tasks.at(-1).id})`);
+                console.log(`task successfully added! (ID: ${json.tasks.at(-1).id})`);
             } else {
                 const json = await getFile();
                 json.tasks.push(
@@ -89,7 +89,7 @@ program
                     }
                 );
                 await updateFile(json);
-                console.log(`Task added successfully (ID: ${jsonFile.tasks.at(-1).id})`);    
+                console.log(`task successfully added! (ID: ${json.tasks.at(-1).id})`);    
             }
         }
         catch(err){
@@ -108,6 +108,8 @@ program
             for(let i = 0; i <= json.tasks.length - 1; i++){
                 if(json.tasks[i].id == taskId){
                     json.tasks[i].description = taskDescription;
+                    json.tasks[i].updatedAt = new Date().toLocaleString();
+                    console.log(`task successfully updated! (ID: ${json.tasks[i].id})`);
                     break
                 } else if (i == json.tasks.length - 1){
                     console.log(`task with ID ${taskId} not found!`)
@@ -130,9 +132,10 @@ program
             for(let i = 0; i <= json.tasks.length - 1; i++){
                 if(json.tasks[i].id == taskId){
                     json.tasks.splice(i, 1);
+                    console.log(`task with ID ${taskId} successfully deleted!`);
                     break
                 } else if (i == json.tasks.length - 1){
-                    console.log(`task with ID ${taskId} not found!`)
+                    console.log(`task with ID ${taskId} not found!`);
                 }
             }
             await updateFile(json);
@@ -159,7 +162,7 @@ program
                     json.tasks[i].updatedAt = new Date().toLocaleString();
                     break;
                 } else if (i == json.tasks.length - 1){
-                    console.log(`ID: ${taskId} não encontrado!`)
+                    console.log(`ID: ${taskId} not found!`)
                 }
             }
             await updateFile(json);
@@ -186,7 +189,7 @@ program
                     json.tasks[i].updatedAt = new Date().toLocaleString();
                     break;
                 } else if (i == json.tasks.length - 1){
-                    console.log(`ID: ${taskId} não encontrado!`)
+                    console.log(`ID: ${taskId} not found!`)
                 }
             }
             await updateFile(json);
