@@ -2,11 +2,10 @@
 // Make the Script Executable
 // This shebang line tells the system to execute the script using Node.js.
 
-const { writeFile } = require('fs/promises');
 const { Command, Option } = require('commander');
 const { randomUUID } = require('crypto');
 const getFile = require('./getfile.js');
-
+const updateFile = require('./updatefile.js');
 const program = new Command();
 
 program
@@ -76,9 +75,8 @@ program
                         updatedAt: "none"
                     }
                 );
-                jsonString = JSON.stringify(json);
-                await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
-                console.log(`Task added successfully (ID: ${json.tasks.at(-1).id})`);
+                updateFile(json);
+                console.log(`Task added successfully (ID: ${jsonFile.tasks.at(-1).id})`);
             } else {
                 const json = await getFile();
                 json.tasks.push(
@@ -90,9 +88,8 @@ program
                         updatedAt: "none"
                     }
                 );
-                jsonString = JSON.stringify(json);
-                await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
-                console.log(`Task added successfully (ID: ${json.tasks.at(-1).id})`);    
+                await updateFile(json);
+                console.log(`Task added successfully (ID: ${jsonFile.tasks.at(-1).id})`);    
             }
         }
         catch(err){
@@ -116,8 +113,7 @@ program
                     console.log(`task with ID ${taskId} not found!`)
                 }
             }
-            jsonString = JSON.stringify(json);
-            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+            await updateFile(json);
         }
         catch(err){
             console.error(err);
@@ -139,8 +135,7 @@ program
                     console.log(`task with ID ${taskId} not found!`)
                 }
             }
-            jsonString = JSON.stringify(json);
-            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+            await updateFile(json);
         }
         catch(err){
             console.error(err);
@@ -167,8 +162,7 @@ program
                     console.log(`ID: ${taskId} não encontrado!`)
                 }
             }
-            jsonString = JSON.stringify(json);
-            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+            await updateFile(json);
         }
         catch(err){
             console.error(err);
@@ -195,8 +189,7 @@ program
                     console.log(`ID: ${taskId} não encontrado!`)
                 }
             }
-            jsonString = JSON.stringify(json);
-            await writeFile('C:/Users/guilherme.souza/Documents/ESTUDO/node/taskTracker/test.json', jsonString);
+            await updateFile(json);
         }
         catch(err){
             console.error(err);
