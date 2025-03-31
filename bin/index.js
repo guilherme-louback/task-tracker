@@ -10,7 +10,7 @@ const program = new Command();
 
 program
     .name('Task Tracker')
-    .description('A CLI tool built to help you track your tasks!')
+    .description('A CLI tool built to help you track your tasks!\n \ntype $ followed by a command. e.g: $ list')
     .version('1.0.0');
 
     // CLI commands
