@@ -3,111 +3,86 @@
 ## Overview
 Task Tracker is a simple command-line interface (CLI) tool built with Node.js to help you track your tasks. You can add, list, update, delete, and change the status of tasks efficiently using this tool.
 
-## Installation
-Before using the CLI, ensure you have Node.js installed on your system.
+## Installation (Without Docker)
+If you want to use the CLI directly on your system, follow these steps:
 
-### **1. Clone the repository**
+1. Clone this repository:
+   ```sh
+   git clone https://github.com/guilherme-louback/task-tracker
+   cd tasktracker
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Link the CLI globally:
+   ```sh
+   npm link
+   ```
+4. Run the CLI:
+   ```sh
+   $ --help
+   ```
+
+---
+
+## Running with Docker
+You can run the Task Tracker CLI inside a Docker container.
+
+### 1️⃣ Build the Docker Image
 ```sh
-git clone <repository-url>
-cd task-tracker
+docker build -t tasktracker .
 ```
 
-### **2. Install dependencies**
+### 2️⃣ Run the Container
 ```sh
-npm install
+docker run -it tasktracker
 ```
+This starts the container and opens an interactive shell where you can use the CLI.
 
-### **3. Make the script executable** (if using Linux/macOS)
-```sh
-chmod +x task-tracker.js
-```
+---
 
 ## Usage
-To use the Task Tracker CLI, run the following command:
+After starting the CLI, you can use the following commands:
+
+### List Tasks
 ```sh
-node task-tracker <command> [options]
+$ list
 ```
-
-Alternatively, if you've set it up as a global command:
-```sh
-task-tracker <command> [options]
-```
-
-## Commands & Examples
-
-### **1. List Tasks**
-List all tasks in your task tracker.
-```sh
-node task-tracker list
-```
-
-#### Options:
+Options:
 - `-i, --id` → Show task IDs
-- `-t, --todo` → Show tasks with status "todo"
-- `-p, --inprogress` → Show tasks with status "in-progress"
+- `-t, --todo` → Show tasks marked as "to-do"
+- `-p, --inprogress` → Show tasks in-progress
 - `-d, --done` → Show completed tasks
 
-Example:
+### Add a Task
 ```sh
-node task-tracker list --todo
+$ add "My new task"
+```
+Options:
+- `-s, --status <status>` → Set status (`todo`, `in-progress`, `done`)
+
+### Update a Task
+```sh
+$ update <id> "New description"
+```
+
+### Delete a Task
+```sh
+$ delete <id>
+```
+
+### Mark a Task as In Progress
+```sh
+$ mark-in-progress <id>
+```
+
+### Mark a Task as Done
+```sh
+$ mark-done <id>
 ```
 
 ---
-### **2. Add a Task**
-Add a new task with a description.
-```sh
-node task-tracker add "Buy groceries"
-```
-
-#### Options:
-- `-s, --status <status>` → Define the task status (`todo`, `in-progress`, or `done`)
-
-Example:
-```sh
-node task-tracker add "Finish project report" --status in-progress
-```
-
----
-### **3. Update Task Description**
-Update the description of an existing task.
-```sh
-node task-tracker update <task-id> "New task description"
-```
-Example:
-```sh
-node task-tracker update 123e4567-e89b-12d3-a456-426614174000 "Submit assignment"
-```
-
----
-### **4. Delete a Task**
-Delete a task by its ID.
-```sh
-node task-tracker delete <task-id>
-```
-Example:
-```sh
-node task-tracker delete 123e4567-e89b-12d3-a456-426614174000
-```
-
----
-### **5. Change Task Status**
-#### Mark a Task as In-Progress
-```sh
-node task-tracker mark-in-progress <task-id>
-```
-Example:
-```sh
-node task-tracker mark-in-progress 123e4567-e89b-12d3-a456-426614174000
-```
-
-#### Mark a Task as Done
-```sh
-node task-tracker mark-done <task-id>
-```
-Example:
-```sh
-node task-tracker mark-done 123e4567-e89b-12d3-a456-426614174000
-```
 
 ## Notes
 - Task IDs are generated randomly using UUID.
@@ -116,4 +91,3 @@ node task-tracker mark-done 123e4567-e89b-12d3-a456-426614174000
 
 ## License
 This project is open-source and available under the MIT License.
-
